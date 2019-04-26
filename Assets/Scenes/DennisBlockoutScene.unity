@@ -710,5 +710,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7397545290977093341, guid: 5ddac54df8166124db948374af13d9f1,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397545291900540688, guid: 5ddac54df8166124db948374af13d9f1,
+        type: 3}
+      propertyPath: m_Convex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397545291900540688, guid: 5ddac54df8166124db948374af13d9f1,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8604484703040581089, guid: 8cb0db194c062e7499367e8aeb228e4f,
+        type: 3}
+    - target: {fileID: 7397545292472071146, guid: 5ddac54df8166124db948374af13d9f1,
+        type: 3}
+      propertyPath: m_Mass
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397545292341018024, guid: 5ddac54df8166124db948374af13d9f1,
+        type: 3}
+      propertyPath: m_Mass
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397545291440297934, guid: 5ddac54df8166124db948374af13d9f1,
+        type: 3}
+      propertyPath: m_Mass
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3514512752343270548, guid: 5ddac54df8166124db948374af13d9f1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397545291719697855, guid: 5ddac54df8166124db948374af13d9f1,
+        type: 3}
+      propertyPath: m_Mass
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397545292379045822, guid: 5ddac54df8166124db948374af13d9f1,
+        type: 3}
+      propertyPath: m_Mass
+      value: 0.05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ddac54df8166124db948374af13d9f1, type: 3}
