@@ -200,6 +200,73 @@ public class InputMaster : IInputActionCollection
                     ""modifiers"": """"
                 }
             ]
+        },
+        {
+            ""name"": ""Menu"",
+            ""id"": ""b2bf8854-3d0f-4cc3-812c-67b290e02ff1"",
+            ""actions"": [
+                {
+                    ""name"": ""Submit"",
+                    ""id"": ""e21865ca-6cca-4ba3-848f-4a33b1633ca3"",
+                    ""expectedControlLayout"": """",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""bindings"": []
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""fba73b42-c7e0-4cfc-a371-8154e03df890"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7298d9b2-c593-4fdf-8fb2-1e80c197e7e8"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a52f613e-0e25-4126-9508-e4d4a23d0612"",
+                    ""path"": ""<Mouse>/clickCount"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d66e8290-b1fd-4494-a2f8-333ed82194fb"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -233,6 +300,9 @@ public class InputMaster : IInputActionCollection
         m_Player = asset.GetActionMap("Player");
         m_Player_Movement = m_Player.GetAction("Movement");
         m_Player_Jump = m_Player.GetAction("Jump");
+        // Menu
+        m_Menu = asset.GetActionMap("Menu");
+        m_Menu_Submit = m_Menu.GetAction("Submit");
     }
     ~InputMaster()
     {
@@ -319,6 +389,45 @@ public class InputMaster : IInputActionCollection
             return new PlayerActions(this);
         }
     }
+    // Menu
+    private InputActionMap m_Menu;
+    private IMenuActions m_MenuActionsCallbackInterface;
+    private InputAction m_Menu_Submit;
+    public struct MenuActions
+    {
+        private InputMaster m_Wrapper;
+        public MenuActions(InputMaster wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Submit { get { return m_Wrapper.m_Menu_Submit; } }
+        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled { get { return Get().enabled; } }
+        public InputActionMap Clone() { return Get().Clone(); }
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterface != null)
+            {
+                Submit.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnSubmit;
+                Submit.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnSubmit;
+                Submit.cancelled -= m_Wrapper.m_MenuActionsCallbackInterface.OnSubmit;
+            }
+            m_Wrapper.m_MenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                Submit.started += instance.OnSubmit;
+                Submit.performed += instance.OnSubmit;
+                Submit.cancelled += instance.OnSubmit;
+            }
+        }
+    }
+    public MenuActions @Menu
+    {
+        get
+        {
+            return new MenuActions(this);
+        }
+    }
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -341,5 +450,9 @@ public class InputMaster : IInputActionCollection
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnSubmit(InputAction.CallbackContext context);
     }
 }

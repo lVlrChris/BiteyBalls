@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        Debug.Log("xSpeed: " + xSpeed + "ySpeed: " + ySpeed);
+        // Debug.Log("xSpeed: " + xSpeed + "ySpeed: " + ySpeed);
         rigidbody.AddTorque(new Vector3(xSpeed, 0, ySpeed));
     }
 
