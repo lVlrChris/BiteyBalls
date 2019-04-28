@@ -27,12 +27,12 @@ public class PowerUpOptions_Editor : Editor
     public override void OnInspectorGUI()
     {
         PowerUpOptions options = (PowerUpOptions)target;
-        options.playerMassOptions = EditorGUILayout.Toggle("Edit player mass", options.playerMassOptions);
+        options.playerMassOptions = EditorGUILayout.Foldout(options.playerMassOptions, "Edit Mass");
         if (options.playerMassOptions)
         {
             options.increasePlayerMassPercentage = EditorGUILayout.IntSlider("Increase mass by %", options.increasePlayerMassPercentage, 0, 100);
         }
-        options.playerSizeOptions = EditorGUILayout.Toggle("Edit player size", options.playerSizeOptions);
+        options.playerSizeOptions = EditorGUILayout.Foldout(options.playerSizeOptions, "Edit Size");
         if (options.playerSizeOptions)
         {
             options.increasePlayerSizePercentage = EditorGUILayout.IntSlider("Increase size by %", options.increasePlayerSizePercentage, 0, 100);
