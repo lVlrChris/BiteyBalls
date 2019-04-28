@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField]
+    private List<PowerUp> powerUps;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +17,18 @@ public class Player : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void AddPowerUp(PowerUp powerUp)
+    {
+        powerUps.Add(powerUp);
+    }
+
+    public void RemovePowerUp(PowerUp powerUp)
+    {
+        powerUps.Remove(powerUp);
+
+        //Recalculate stats
     }
 
     private void OnTriggerEnter(Collider other)

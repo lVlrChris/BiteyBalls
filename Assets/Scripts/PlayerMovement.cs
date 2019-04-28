@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {    
     [SerializeField]
     private float moveSpeed;
+    public float MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
 
     private new Rigidbody rigidbody;
 
@@ -25,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        rigidbody.maxAngularVelocity = 100;
         controls.Player.Jump.performed += ctx => Jump();
         controls.Player.Movement.performed += ctx => xSpeed = ctx.ReadValue<Vector2>().x * moveSpeed * Time.deltaTime;
         controls.Player.Movement.performed += ctx => ySpeed = ctx.ReadValue<Vector2>().y * moveSpeed * Time.deltaTime;
@@ -50,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
     private void Jump() {
         Debug.Log("Jump");
     }
-    
+
     private void OnEnable() {
         controls.Enable();
     }
