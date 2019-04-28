@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
         float xInput = Input.GetAxis("Horizontal P" + playerInfo.playerIndex);
         float yInput = Input.GetAxis("Vertical P" + playerInfo.playerIndex);
 
-        // Calculate speed with multiplier and time delta
+        // Calculate speed with movement speed multiplier and time delta
         float xSpeed = xInput * moveSpeed * Time.deltaTime;
         float ySpeed = yInput * moveSpeed * Time.deltaTime;
 
