@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Treat : MonoBehaviour
+public class PowerUp : MonoBehaviour
 {
-    public TreatOptions treatOptions;
+    public PowerUpOptions options;
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +22,11 @@ public class Treat : MonoBehaviour
     {
         Rigidbody playerRigidbody = player.GetComponent<Rigidbody>();
 
-        playerRigidbody.mass *= (1 + (treatOptions.increasePlayerMassPercentage / 100f));
+        playerRigidbody.mass *= (1 + (options.increasePlayerMassPercentage / 100f));
         player.transform.localScale = new Vector3(
-            player.transform.localScale.x * (1 + (treatOptions.increasePlayerSizePercentage / 100f)),
-            player.transform.localScale.y * (1 + (treatOptions.increasePlayerSizePercentage / 100f)),
-            player.transform.localScale.z * (1 + (treatOptions.increasePlayerSizePercentage / 100f))
+            player.transform.localScale.x * (1 + (options.increasePlayerSizePercentage / 100f)),
+            player.transform.localScale.y * (1 + (options.increasePlayerSizePercentage / 100f)),
+            player.transform.localScale.z * (1 + (options.increasePlayerSizePercentage / 100f))
         );
 
         Destroy(gameObject);

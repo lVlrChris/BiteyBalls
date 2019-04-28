@@ -18,9 +18,9 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Treat"))
+        if (other.CompareTag("PowerUp"))
         {
-            other.GetComponent<Treat>().PickUp(gameObject);
+            other.GetComponent<PowerUp>().PickUp(gameObject);
         }
     }
 }
