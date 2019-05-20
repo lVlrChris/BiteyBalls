@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private float moveSpeed;
+    [SerializeField]
+    private float maxSpinSpeed;
 
     public float MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
 
@@ -16,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInfo = this.GetComponent<Player>().playerInfo;
         rigidbody = GetComponent<Rigidbody>();
+        rigidbody.maxAngularVelocity = maxSpinSpeed;
     }
 
     void FixedUpdate()
