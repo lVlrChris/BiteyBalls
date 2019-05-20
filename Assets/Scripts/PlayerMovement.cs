@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Input;
 
 public class PlayerMovement : MonoBehaviour
 {    
@@ -9,22 +8,12 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed;
     public float MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
 
-    private new Rigidbody rigidbody;
-
-    private InputMaster controls;
-    
-    private float xSpeed;
-    private float ySpeed;
-
     private PlayerInfo playerInfo;
-
-    void Awake()
-    {
-        controls = new InputMaster();
-    }
+    private new Rigidbody rigidbody;
 
     void Start()
     {
+        playerInfo = this.GetComponent<Player>().playerInfo;
         rigidbody = GetComponent<Rigidbody>();
         rigidbody.maxAngularVelocity = 100;
         controls.Player.Jump.performed += ctx => Jump();
@@ -38,22 +27,26 @@ public class PlayerMovement : MonoBehaviour
         Movement();
     }
 
-    void Update()
-    {
-        
-    }
-
     private void Movement()
     {
-        //Debug.Log("xSpeed: " + xSpeed + "ySpeed: " + ySpeed);
-        rigidbody.AddTorque(new Vector3(xSpeed, 0, ySpeed));
+        // Get input
+        float xInput = Input.GetAxis("Horizontal P" + playerInfo.playerIndex);
+        float yInput = Input.GetAxis("Vertical P" + playerInfo.playerIndex);
+        
     }
-
+    
     private void Jump() {
         Debug.Log("Jump");
     }
 
     private void OnEnable() {
         controls.Enable();
+        
+        // Calculate speed with movement speed multiplier and time delta
+        float xSpeed = xInput * moveSpeed * Time.deltaTime;
+        float ySpeed = yInput * moveSpeed * Time.deltaTime;
+
+        // Add speed to rigidbody torque
+        rigidbody.AddTorque(new Vector3(xSpeed, 0, ySpeed));
     }
 }

@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private List<PowerUp> powerUps;
+    public PlayerInfo playerInfo;
 
     // Start is called before the first frame update
     void Start()
