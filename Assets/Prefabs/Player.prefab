@@ -142,6 +142,7 @@ MonoBehaviour:
   jumpVelocity: 7
   fallMultiplier: 2.5
   lowJumpMultiplier: 3.5
+  airSpeed: 500
 --- !u!54 &59334358
 Rigidbody:
   m_ObjectHideFlags: 0

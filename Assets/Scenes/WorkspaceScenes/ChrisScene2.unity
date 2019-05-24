@@ -472,11 +472,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 401671783783128937, guid: 1b24fbb3df91d22428b898dfbabbf5f4,
-        type: 3}
-      propertyPath: airSpeed
-      value: 500
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b24fbb3df91d22428b898dfbabbf5f4, type: 3}
 --- !u!1 &229784242
