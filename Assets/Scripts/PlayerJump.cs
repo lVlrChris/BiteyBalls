@@ -10,6 +10,8 @@ public class PlayerJump : MonoBehaviour
     private float fallMultiplier = 2.5f;
     [SerializeField]
     private float lowJumpMultiplier = 2f;
+    [SerializeField]
+    private float airSpeed;
 
     private PlayerInfo playerInfo;
     private new Rigidbody rigidbody;
@@ -26,6 +28,7 @@ public class PlayerJump : MonoBehaviour
     {
         Jump();
         Fall();
+        MidAirMove();
     }
 
     private void Jump()
@@ -45,6 +48,20 @@ public class PlayerJump : MonoBehaviour
         else if (rigidbody.velocity.y > 0 && !Input.GetButton("Jump P" + playerInfo.playerIndex))
         {
             rigidbody.velocity += Vector3.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+        }
+    }
+    
+    private void MidAirMove()
+    {
+        if (!IsGrounded())
+        {
+            // Get input
+            float xInput = Input.GetAxis("Horizontal P" + playerInfo.playerIndex);
+            float yInput = Input.GetAxis("Vertical P" + playerInfo.playerIndex);
+
+            Vector3 direction = new Vector3(-yInput, 0, xInput) * airSpeed * Time.deltaTime;
+
+            rigidbody.AddForce(direction, ForceMode.Force);
         }
     }
 
