@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed;
     [SerializeField]
     private float maxSpinSpeed;
+    [SerializeField]
+    private float playerBounce;
 
     public float MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
 
@@ -47,16 +49,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        foreach (ContactPoint contact in collision.contacts)
-        {
-            Debug.DrawRay(contact.point, contact.normal * -13, Color.red, 5f);
+        Debug.DrawRay(collision.contacts[0].point, collision.contacts[0].normal * -12, Color.red, 5f);
 
-            //Check if collision is a player
-            if (collision.collider.CompareTag("Player"))
-            {
-                Vector3 direction = collision.collider.transform.position - transform.position;
-                collision.collider.GetComponent<Rigidbody>().AddForce(direction * 100, ForceMode.Impulse);
-            }
+        //Check if collision is a player
+        if (collision.collider.CompareTag("Player"))
+        {
+            float bounceForce = collision.relativeVelocity.magnitude * playerBounce;
+            Vector3 direction = collision.collider.transform.position - transform.position;
+
+            Debug.Log("BounceForce: " + bounceForce + " direction: " + direction);
+
+            collision.collider.GetComponent<Rigidbody>().AddForce(direction * bounceForce, ForceMode.Impulse);
+            // rigidbody.AddForce(direction * -bounceForce, ForceMode.Impulse);
         }
     }
 }
