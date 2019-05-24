@@ -18,12 +18,17 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInfo = this.GetComponent<Player>().playerInfo;
         rigidbody = GetComponent<Rigidbody>();
-        rigidbody.maxAngularVelocity = maxSpinSpeed;
     }
 
     void FixedUpdate()
     {
         Movement();
+    }
+    
+    void Update()
+    {
+        //Max spin speed set in update to tweak while playing.
+        rigidbody.maxAngularVelocity = maxSpinSpeed;
     }
 
     private void Movement()
@@ -38,5 +43,20 @@ public class PlayerMovement : MonoBehaviour
 
         // Add speed to rigidbody torque
         rigidbody.AddTorque(new Vector3(xSpeed, 0, ySpeed));
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            Debug.DrawRay(contact.point, contact.normal * -13, Color.red, 5f);
+
+            //Check if collision is a player
+            if (collision.collider.CompareTag("Player"))
+            {
+                Vector3 direction = collision.collider.transform.position - transform.position;
+                collision.collider.GetComponent<Rigidbody>().AddForce(direction * 100, ForceMode.Impulse);
+            }
+        }
     }
 }
