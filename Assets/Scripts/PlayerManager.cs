@@ -5,11 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerManager
 {
-    public Transform spawnPoint;
-
-    [HideInInspector] public int playerIndex;
+    public int playerIndex;
+    public int wins;
+    public GameObject playerPrefab;
     [HideInInspector] public GameObject instance;
-    [HideInInspector] public int wins;
 
     private PlayerInfo playerInfo;
     private PlayerMovement movement;
