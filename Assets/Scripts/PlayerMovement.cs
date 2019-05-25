@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed;
     [SerializeField]
     private float maxSpinSpeed;
+    [SerializeField]
+    private float playerBounceForce;
 
     public float MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
 
@@ -18,12 +20,17 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInfo = this.GetComponent<Player>().playerInfo;
         rigidbody = GetComponent<Rigidbody>();
-        rigidbody.maxAngularVelocity = maxSpinSpeed;
     }
 
     void FixedUpdate()
     {
         Movement();
+    }
+    
+    void Update()
+    {
+        //Max spin speed set in update to tweak while playing.
+        rigidbody.maxAngularVelocity = maxSpinSpeed;
     }
 
     private void Movement()
@@ -38,5 +45,20 @@ public class PlayerMovement : MonoBehaviour
 
         // Add speed to rigidbody torque
         rigidbody.AddTorque(new Vector3(xSpeed, 0, ySpeed));
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.DrawRay(collision.contacts[0].point, collision.contacts[0].normal * -12, Color.red, 5f);
+
+        //Check if collision is a player
+        if (collision.collider.CompareTag("Player"))
+        {
+            float bounceForce = collision.relativeVelocity.magnitude * playerBounceForce;
+            Vector3 direction = collision.collider.transform.position - transform.position;
+
+            collision.collider.GetComponent<Rigidbody>().AddForce(direction * bounceForce, ForceMode.Impulse);
+            // rigidbody.AddForce(direction * -bounceForce, ForceMode.Impulse);
+        }
     }
 }
