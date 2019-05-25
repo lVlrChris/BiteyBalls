@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6382104837886819052}
   - component: {fileID: 729306332677665438}
   - component: {fileID: 433540280700550873}
+  - component: {fileID: 401671783783128937}
   - component: {fileID: 59334358}
   m_Layer: 0
   m_Name: Player
@@ -126,6 +127,22 @@ MonoBehaviour:
   moveSpeed: 600
   maxSpinSpeed: 25
   playerBounceForce: 0.8
+--- !u!114 &401671783783128937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433540280700550872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c370f71ced34152419a87816bce38ec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpVelocity: 7
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 3.5
+  airSpeed: 500
 --- !u!54 &59334358
 Rigidbody:
   m_ObjectHideFlags: 0
