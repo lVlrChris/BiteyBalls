@@ -13,7 +13,7 @@ public class KillZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
         }
     }
 }
