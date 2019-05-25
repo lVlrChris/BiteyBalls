@@ -10,12 +10,15 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private float endDelay = 3f;
     [SerializeField]
-    public Transform[] spawnpoints;
+    private int winsForMatch = 3;
+    [SerializeField]
+    private Transform[] spawnpoints;
 
     private GameManager gameManager;
     private WaitForSeconds startWait;
     private WaitForSeconds endWait;    
     private PlayerManager roundWinner;
+    private PlayerManager matchWinner;
 
     void Start()
     {
@@ -44,10 +47,10 @@ public class LevelManager : MonoBehaviour
         yield return StartCoroutine(RoundPlaying());
         yield return StartCoroutine(RoundEnding());
 
-        if (roundWinner != null) 
+        if (matchWinner != null) 
         {
             // TODO: Async loading
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
         else
         {
@@ -57,7 +60,9 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator RoundStarting()
     {
+        ResetAllPlayers();
         DisableControl();
+        
         yield return startWait;
     }
 
@@ -80,9 +85,10 @@ public class LevelManager : MonoBehaviour
         roundWinner = GetRoundWinner();
 
         if (roundWinner != null)
-        {
             roundWinner.wins++;
-        }
+
+        matchWinner = null;
+        matchWinner = GetMatchWinner();
         
         yield return endWait;
     }
@@ -109,6 +115,25 @@ public class LevelManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    private PlayerManager GetMatchWinner()
+    {
+        foreach (PlayerManager player in gameManager.players)
+        {
+            if (player.wins >= winsForMatch)
+                return player;
+        }
+
+        return null;
+    }
+
+    private void ResetAllPlayers()
+    {
+        foreach (PlayerManager player in gameManager.players)
+        {
+            player.Reset(spawnpoints[player.playerIndex - 1]);
+        }
     }
 
     private void DisableControl()

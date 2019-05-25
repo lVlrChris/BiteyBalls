@@ -1228,6 +1228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startDelay: 3
   endDelay: 3
+  winsForMatch: 5
   spawnpoints:
   - {fileID: 1452857045}
   - {fileID: 1247621685}
