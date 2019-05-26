@@ -49,8 +49,12 @@ public class LevelManager : MonoBehaviour
 
         if (matchWinner != null) 
         {
-            // TODO: Async loading
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            ResetWins();
+
+            if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
+                StartCoroutine(AsyncSceneLoad(SceneManager.GetActiveScene().buildIndex + 1));
+            else
+                StartCoroutine(AsyncSceneLoad(SceneManager.GetActiveScene().buildIndex));
         }
         else
         {
@@ -62,6 +66,8 @@ public class LevelManager : MonoBehaviour
     {
         ResetAllPlayers();
         DisableControl();
+
+        // TODO: Show countdown
         
         yield return startWait;
     }
@@ -136,6 +142,14 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void ResetWins()
+    {
+        foreach(PlayerManager player in gameManager.players)
+        {
+            player.wins = 0;
+        }
+    }
+
     private void DisableControl()
     {
         foreach(PlayerManager player in gameManager.players)
@@ -149,6 +163,16 @@ public class LevelManager : MonoBehaviour
         foreach(PlayerManager player in gameManager.players)
         {
             player.EnableControl();
+        }
+    }
+
+    private IEnumerator AsyncSceneLoad(int buildIndex)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(buildIndex);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
         }
     }
 }
