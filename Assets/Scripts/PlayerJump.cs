@@ -21,7 +21,6 @@ public class PlayerJump : MonoBehaviour
     {
         playerInfo = GetComponent<Player>().playerInfo;
         rigidbody = GetComponent<Rigidbody>();
-        distToGround = GetComponent<Collider>().bounds.extents.y;
     }
 
     void Update()
@@ -29,6 +28,7 @@ public class PlayerJump : MonoBehaviour
         Jump();
         Fall();
         MidAirMove();
+        distToGround = GetComponent<Collider>().bounds.extents.y;
     }
 
     private void Jump()
@@ -43,11 +43,11 @@ public class PlayerJump : MonoBehaviour
     {
         if (rigidbody.velocity.y < 0)
         {
-            rigidbody.velocity += Vector3.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+            rigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         } 
         else if (rigidbody.velocity.y > 0 && !Input.GetButton("Jump P" + playerInfo.playerIndex))
         {
-            rigidbody.velocity += Vector3.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+            rigidbody.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
     }
     
@@ -67,6 +67,6 @@ public class PlayerJump : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+        return Physics.Raycast(transform.position, Vector3.down, distToGround + 0.1f);
     }
 }
