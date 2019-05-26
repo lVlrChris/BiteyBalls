@@ -49,8 +49,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.DrawRay(collision.contacts[0].point, collision.contacts[0].normal * -12, Color.red, 5f);
-
         //Check if collision is a player
         if (collision.collider.CompareTag("Player"))
         {

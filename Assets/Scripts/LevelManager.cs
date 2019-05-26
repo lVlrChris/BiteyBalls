@@ -24,8 +24,7 @@ public class LevelManager : MonoBehaviour
     {
         startWait = new WaitForSeconds(startDelay);
         endWait = new WaitForSeconds(endDelay);
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-
+        gameManager = FindObjectOfType<GameManager>();
         SpawnAllPlayers();
 
         StartCoroutine(GameLoop());
@@ -99,7 +98,7 @@ public class LevelManager : MonoBehaviour
         yield return endWait;
     }
 
-        private bool OnePlayerLeft()
+    private bool OnePlayerLeft()
     {
         int playersLeft = 0;
 
