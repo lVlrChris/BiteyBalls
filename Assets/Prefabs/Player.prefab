@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 433540280700550872}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 7349535837287087786}
   m_Father: {fileID: 0}
@@ -126,7 +126,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 600
   maxSpinSpeed: 25
-  playerBounceForce: 0.8
+  playerBounceForce: 0.6
+  upwardBounce: 1.2
 --- !u!114 &401671783783128937
 MonoBehaviour:
   m_ObjectHideFlags: 0

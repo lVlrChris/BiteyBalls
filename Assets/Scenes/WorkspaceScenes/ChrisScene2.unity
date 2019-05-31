@@ -677,6 +677,11 @@ MonoBehaviour:
     playerPrefab: {fileID: 433540280700550872, guid: 1b24fbb3df91d22428b898dfbabbf5f4,
       type: 3}
     instance: {fileID: 0}
+  - playerIndex: 0
+    wins: 0
+    playerPrefab: {fileID: 433540280700550872, guid: 1b24fbb3df91d22428b898dfbabbf5f4,
+      type: 3}
+    instance: {fileID: 0}
 --- !u!4 &363675867
 Transform:
   m_ObjectHideFlags: 0
@@ -2308,6 +2313,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mass
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397545292452099825, guid: 5ddac54df8166124db948374af13d9f1,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ddac54df8166124db948374af13d9f1, type: 3}

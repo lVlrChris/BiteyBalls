@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/WorkspaceScenes/MenuTest1.unity
     guid: 596172245d3578c4a8acde28badc4857
   - enabled: 1
+    path: Assets/Scenes/WorkspaceScenes/TerrariumTest1.unity
+    guid: 794d97a907e60f14d9749f4fbfa094d9
+  - enabled: 1
     path: Assets/Scenes/WorkspaceScenes/ChrisScene2.unity
     guid: 478c60561006cae4fb7b7c5ad23b7cca
-  - enabled: 1
-    path: Assets/Scenes/WorkspaceScenes/ChrisScene2NextLevelTest.unity
-    guid: 08168363747f73c4bbf7d565c0c89fe4
   m_configObjects: {}
