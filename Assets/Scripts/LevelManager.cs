@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
     [SerializeField]
-    private float startDelay = 3f;
+    private float startDelay = 4f;
     [SerializeField]
     private float endDelay = 3f;
     [SerializeField]
     private int winsForMatch = 3;
+    [SerializeField]
+    private GameObject countdownText;
     [SerializeField]
     private Transform[] spawnpoints;
 
@@ -66,7 +69,7 @@ public class LevelManager : MonoBehaviour
         ResetAllPlayers();
         DisableControl();
 
-        // TODO: Show countdown
+        StartCoroutine(Countdown(startDelay, countdownText));
         
         yield return startWait;
     }
@@ -163,6 +166,25 @@ public class LevelManager : MonoBehaviour
         {
             player.EnableControl();
         }
+    }
+
+    private IEnumerator Countdown(float timer, GameObject text)
+    {
+        Debug.Assert(text != null, "Countdown text not assigned in inspector.");
+        TextMeshProUGUI tmText = text.GetComponent<TextMeshProUGUI>();
+
+        text.SetActive(true);
+        while (timer > 1)
+        {
+            tmText.SetText((timer - 1).ToString());
+            timer--;
+
+            yield return new WaitForSeconds(1);
+        }
+        
+        tmText.SetText("Start!");
+        yield return new WaitForSeconds(1);
+        text.SetActive(false);
     }
 
     private IEnumerator AsyncSceneLoad(int buildIndex)
