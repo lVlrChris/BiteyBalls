@@ -15,6 +15,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private GameObject countdownText;
     [SerializeField]
+    private GameObject[] playerUIs;
+    [SerializeField]
     private Transform[] spawnpoints;
 
     private GameManager gameManager;
@@ -39,7 +41,7 @@ public class LevelManager : MonoBehaviour
         {
             gameManager.players[i].instance = Instantiate(gameManager.players[i].playerPrefab, spawnpoints[i].position, spawnpoints[i].rotation) as GameObject;
             gameManager.players[i].playerIndex = i + 1;
-            gameManager.players[i].Setup();
+            gameManager.players[i].Setup(playerUIs[i]);
         }
     }
 
