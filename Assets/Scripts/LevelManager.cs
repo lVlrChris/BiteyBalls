@@ -15,6 +15,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private GameObject countdownText;
     [SerializeField]
+    private GameObject winnerText;
+    [SerializeField]
+    private GameObject matchWinnerText;
+    [SerializeField]
     private GameObject[] playerUIs;
     [SerializeField]
     private Transform[] spawnpoints;
@@ -51,14 +55,25 @@ public class LevelManager : MonoBehaviour
         yield return StartCoroutine(RoundPlaying());
         yield return StartCoroutine(RoundEnding());
 
-        if (matchWinner != null) 
+        if (matchWinner != null)
         {
             ResetWins();
+            matchWinnerText.transform.parent.gameObject.SetActive(true);
+            matchWinnerText.GetComponent<TextMeshProUGUI>().SetText("Player " + matchWinner.playerIndex + " \nwon the match!");
 
-            if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
-                StartCoroutine(AsyncSceneLoad(SceneManager.GetActiveScene().buildIndex + 1));
-            else
-                StartCoroutine(AsyncSceneLoad(SceneManager.GetActiveScene().buildIndex));
+            while(true)
+            {
+
+                if (Input.GetButtonUp("Jump P1"))
+                {
+                    if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
+                        StartCoroutine(AsyncSceneLoad(SceneManager.GetActiveScene().buildIndex + 1));
+                    else
+                        StartCoroutine(AsyncSceneLoad(SceneManager.GetActiveScene().buildIndex));
+                }
+                
+                yield return null;
+            }
         }
         else
         {
@@ -95,12 +110,17 @@ public class LevelManager : MonoBehaviour
         roundWinner = GetRoundWinner();
 
         if (roundWinner != null)
-            roundWinner.wins++;
+        {
+            roundWinner.AddWin();
+            winnerText.GetComponent<TextMeshProUGUI>().SetText("Player " + roundWinner.playerIndex + " won!");
+            winnerText.SetActive(true);
+        }
 
         matchWinner = null;
         matchWinner = GetMatchWinner();
         
         yield return endWait;
+        winnerText.SetActive(false);
     }
 
     private bool OnePlayerLeft()

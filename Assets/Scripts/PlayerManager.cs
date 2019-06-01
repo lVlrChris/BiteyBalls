@@ -54,6 +54,12 @@ public class PlayerManager
         playerModel.enabled = true;
     }
 
+    public void AddWin()
+    {
+        wins++;
+        playerWinsText.SetText("Wins: " + wins);
+    }
+
     public void Reset(Transform spawnpoint)
     {
         Rigidbody instanceRb = instance.GetComponent<Rigidbody>();
