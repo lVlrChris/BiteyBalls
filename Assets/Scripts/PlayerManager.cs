@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 [System.Serializable]
 public class PlayerManager
@@ -15,14 +17,27 @@ public class PlayerManager
     private PlayerJump jumping;
     private PlayerModel playerModel;
 
-    public void Setup()
+    private Image playerImage;
+    private TextMeshProUGUI playerText;
+    private TextMeshProUGUI playerWinsText;
+
+    public void Setup(GameObject playerUI)
     {
         movement = instance.GetComponent<PlayerMovement>();
         jumping = instance.GetComponent<PlayerJump>();
         playerModel = instance.GetComponentInChildren<PlayerModel>();
         playerInfo = instance.GetComponent<Player>().playerInfo;
-        
+
+        playerImage = playerUI.GetComponentInChildren<Image>();
+        playerText = playerUI.GetComponentsInChildren<TextMeshProUGUI>()[0];
+        playerWinsText = playerUI.GetComponentsInChildren<TextMeshProUGUI>()[1];
+
         playerInfo.playerIndex = playerIndex;
+
+        playerText.SetText("Player " + playerInfo.playerIndex);
+        playerWinsText.SetText("Wins: " + wins);
+
+        playerUI.SetActive(true);
     }
 
     public void DisableControl()
@@ -37,6 +52,12 @@ public class PlayerManager
         movement.enabled = true;
         jumping.enabled = true;
         playerModel.enabled = true;
+    }
+
+    public void AddWin()
+    {
+        wins++;
+        playerWinsText.SetText("Wins: " + wins);
     }
 
     public void Reset(Transform spawnpoint)

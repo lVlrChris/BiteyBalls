@@ -2,15 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
     [SerializeField]
-    private float startDelay = 3f;
+    private float startDelay = 4f;
     [SerializeField]
     private float endDelay = 3f;
     [SerializeField]
     private int winsForMatch = 3;
+    [SerializeField]
+    private GameObject countdownText;
+    [SerializeField]
+    private GameObject winnerText;
+    [SerializeField]
+    private GameObject matchWinnerText;
+    [SerializeField]
+    private GameObject[] playerUIs;
     [SerializeField]
     private Transform[] spawnpoints;
 
@@ -36,7 +45,7 @@ public class LevelManager : MonoBehaviour
         {
             gameManager.players[i].instance = Instantiate(gameManager.players[i].playerPrefab, spawnpoints[i].position, spawnpoints[i].rotation) as GameObject;
             gameManager.players[i].playerIndex = i + 1;
-            gameManager.players[i].Setup();
+            gameManager.players[i].Setup(playerUIs[i]);
         }
     }
 
@@ -46,14 +55,25 @@ public class LevelManager : MonoBehaviour
         yield return StartCoroutine(RoundPlaying());
         yield return StartCoroutine(RoundEnding());
 
-        if (matchWinner != null) 
+        if (matchWinner != null)
         {
             ResetWins();
+            matchWinnerText.transform.parent.gameObject.SetActive(true);
+            matchWinnerText.GetComponent<TextMeshProUGUI>().SetText("Player " + matchWinner.playerIndex + " \nwon the match!");
 
-            if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
-                StartCoroutine(AsyncSceneLoad(SceneManager.GetActiveScene().buildIndex + 1));
-            else
-                StartCoroutine(AsyncSceneLoad(SceneManager.GetActiveScene().buildIndex));
+            while(true)
+            {
+
+                if (Input.GetButtonUp("Jump P1"))
+                {
+                    if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
+                        StartCoroutine(AsyncSceneLoad(SceneManager.GetActiveScene().buildIndex + 1));
+                    else
+                        StartCoroutine(AsyncSceneLoad(SceneManager.GetActiveScene().buildIndex));
+                }
+                
+                yield return null;
+            }
         }
         else
         {
@@ -66,7 +86,7 @@ public class LevelManager : MonoBehaviour
         ResetAllPlayers();
         DisableControl();
 
-        // TODO: Show countdown
+        StartCoroutine(Countdown(startDelay, countdownText));
         
         yield return startWait;
     }
@@ -90,12 +110,17 @@ public class LevelManager : MonoBehaviour
         roundWinner = GetRoundWinner();
 
         if (roundWinner != null)
-            roundWinner.wins++;
+        {
+            roundWinner.AddWin();
+            winnerText.GetComponent<TextMeshProUGUI>().SetText("Player " + roundWinner.playerIndex + " won!");
+            winnerText.SetActive(true);
+        }
 
         matchWinner = null;
         matchWinner = GetMatchWinner();
         
         yield return endWait;
+        winnerText.SetActive(false);
     }
 
     private bool OnePlayerLeft()
@@ -163,6 +188,25 @@ public class LevelManager : MonoBehaviour
         {
             player.EnableControl();
         }
+    }
+
+    private IEnumerator Countdown(float timer, GameObject text)
+    {
+        Debug.Assert(text != null, "Countdown text not assigned in inspector.");
+        TextMeshProUGUI tmText = text.GetComponent<TextMeshProUGUI>();
+
+        text.SetActive(true);
+        while (timer > 1)
+        {
+            tmText.SetText((timer - 1).ToString());
+            timer--;
+
+            yield return new WaitForSeconds(1);
+        }
+        
+        tmText.SetText("Start!");
+        yield return new WaitForSeconds(1);
+        text.SetActive(false);
     }
 
     private IEnumerator AsyncSceneLoad(int buildIndex)
