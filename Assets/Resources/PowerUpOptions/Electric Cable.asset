@@ -10,9 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ebf8e6bb68a5c14bbfceb807ba6b292, type: 3}
-  m_Name: Treat
+  m_Name: Electric Cable
   m_EditorClassIdentifier: 
   playerMassOptions: 1
   increasePlayerMassPercentage: 0
-  playerSizeOptions: 0
-  increasePlayerSizePercentage: 53
+  playerSizeOptions: 1
+  increasePlayerSizePercentage: 0
+  playerMovementOptions: 1
+  increasePlayerJumpHeightPercentage: 100
+  increasePlayerMoveSpeedPercentage: 0
